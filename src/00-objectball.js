@@ -117,6 +117,98 @@ function bigShoeRebounds() {
   return playerWithMaxShoe ? playerStats(playerWithMaxShoe).rebounds : null;
 }
 
+// Function to find the player with the most points
+function mostPointsScored() {
+  const game = gameObject();
+  let maxPoints = -Infinity;
+  let playerWithMaxPoints = null;
+  for (const team in game) {
+    if (game.hasOwnProperty(team)) {
+      const players = game[team].players;
+      for (const player in players) {
+        if (players.hasOwnProperty(player)) {
+          const points = players[player].points;
+          if (points > maxPoints) {
+            maxPoints = points;
+            playerWithMaxPoints = player;
+          }
+        }
+      }
+    }
+  }
+  return playerWithMaxPoints;
+}
+
+// Function to determine which team has the most points
+function winningTeam() {
+  const game = gameObject();
+  let maxTeamPoints = -Infinity;
+  let winningTeam = null;
+  for (const team in game) {
+    if (game.hasOwnProperty(team)) {
+      const players = game[team].players;
+      let teamPoints = 0;
+      for (const player in players) {
+        if (players.hasOwnProperty(player)) {
+          teamPoints += players[player].points;
+        }
+      }
+      if (teamPoints > maxTeamPoints) {
+        maxTeamPoints = teamPoints;
+        winningTeam = game[team].teamName;
+      }
+    }
+  }
+  return winningTeam;
+}
+
+// Function to find the player with the longest name
+function playerWithLongestName() {
+  const game = gameObject();
+  let longestNameLength = -Infinity;
+  let playerWithLongestName = null;
+  for (const team in game) {
+    if (game.hasOwnProperty(team)) {
+      const players = game[team].players;
+      for (const player in players) {
+        if (players.hasOwnProperty(player)) {
+          const playerNameLength = player.length;
+          if (playerNameLength > longestNameLength) {
+            longestNameLength = playerNameLength;
+            playerWithLongestName = player;
+          }
+        }
+      }
+    }
+  }
+  return playerWithLongestName;
+}
+
+// Function to determine if the player with the longest name had the most steals
+function doesLongNameStealATon() {
+  const game = gameObject();
+  const playerWithLongestName = playerWithLongestName();
+  const statsOfLongestNamePlayer = playerStats(playerWithLongestName);
+  let maxSteals = -Infinity;
+  let playerWithMaxSteals = null;
+  for (const team in game) {
+    if (game.hasOwnProperty(team)) {
+      const players = game[team].players;
+      for (const player in players) {
+        if (players.hasOwnProperty(player)) {
+          const steals = players[player].steals;
+          if (steals > maxSteals) {
+            maxSteals = steals;
+            playerWithMaxSteals = player;
+          }
+        }
+      }
+    }
+  }
+  return playerWithLongestName === playerWithMaxSteals;
+}
+
+
 // Testing the functions
 console.log(numPointsScored("Alan Anderson")); // Output: 22
 console.log(shoeSize("Alan Anderson")); // Output: 16
@@ -125,6 +217,9 @@ console.log(teamNames()); // Output: ["Brooklyn Nets", "Charlotte Hornets"]
 console.log(playerNumbers("Brooklyn Nets")); // Output: [0, 30, 11, 1, 31]
 console.log(playerStats("Alan Anderson")); // Output: { number: 0, shoe: 16, points: 22, rebounds: 12, assists: 12, steals: 3, blocks: 1, slamDunks: 1 }
 console.log(bigShoeRebounds()); // Output: 12
-
+console.log(mostPointsScored());
+console.log(winningTeam());
+console.log(playerWithLongestName());
+console.log(doesLongNameStealATon());
 
 
